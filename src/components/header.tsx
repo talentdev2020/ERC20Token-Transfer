@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ethers, utils } from 'ethers';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useAppDispatch } from '../app/hooks';
 import { fixedBalance } from "../utils/format"
 import {
-    setTokenInstance,
-    // getTokenInstance,
     setWalletInfo
 } from '../slices/walletSlice';
 import ABI from "../consts/tokenABI.json"  ;
@@ -27,13 +26,12 @@ declare global {
 
 const Header = () => {
   const classes = useStyles();
-//   const tokenInstance = useAppSelector(getTokenInstance);
   const dispatch = useAppDispatch();
-
+  const [isConnect, setIsConnect] = useState( false );
 
   const onConnectWallet = async () => {
     if (window.ethereum) {
-        // await window.ethereum.enable();
+        setIsConnect(true);
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -47,10 +45,10 @@ const Header = () => {
                 daiBalance: fixedBalance(utils.formatEther(daiBalance)),
                 address
             }))
-            dispatch(setTokenInstance(contract))
         } catch (err) {
             console.log(err)
         }
+        setIsConnect(false);
     }
   }
   return (
@@ -59,7 +57,12 @@ const Header = () => {
             <span>DeFi App</span>
         </div>
         <div>
-            <Button variant="contained" color="secondary" onClick={ () => onConnectWallet()} >CONNECT WALLET</Button>
+            <Button variant="contained" color="secondary" onClick={ () => onConnectWallet()} >
+                CONNECT WALLET  
+                {
+                    isConnect && <CircularProgress size="1.5rem"/>
+                }
+            </Button>
         </div>
       </div>
   )

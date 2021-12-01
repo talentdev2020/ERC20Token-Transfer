@@ -30,14 +30,11 @@ export const walletSlice = createSlice({
     setWalletInfo: (state, action: PayloadAction<IWalletInfo>) => {
       state.wallet = action.payload;
     },
-    setTokenInstance: (state, action: PayloadAction<any>) => {
-        state.tokenInstance = action.payload;
-      },
+    
   },
 });
 
 export const { setWalletInfo } = walletSlice.actions;
-export const { setTokenInstance } = walletSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

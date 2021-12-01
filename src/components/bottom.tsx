@@ -20,12 +20,14 @@ import {
     left: 0,
     right: 0,
   },
-  wallet: {
-    fontSize: "12px"
+  walletBalance: {
+    fontSize: "12px",
+  },
+  walletSection: {
+    textAlign: 'right'
   },
   walletSpan: {
-    margin: "0 5px",
-    textAlign: 'right'
+    marginRight: "7px",
   }
 }));
 
@@ -38,16 +40,15 @@ const Bottom = () => {
         <div>
             <span>DeFi App</span>
         </div>
-        ssdds{walletInfo.address}
         {
           walletInfo.address &&
-          <div>
+          <div className={classes.walletSection}>
             <div>
               { getShortAddress(walletInfo.address) }
             </div>
-            <div  className={classes.wallet}>
+            <div  className={classes.walletBalance}>
               <span className={classes.walletSpan}>{walletInfo.ethBalance} ETH</span>
-              <span className={classes.walletSpan}>{walletInfo.daiBalance} DAI</span>
+              <span>{walletInfo.daiBalance} DAI</span>
             </div>
         </div>
         }
