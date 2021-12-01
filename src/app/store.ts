@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import walletReducer from '../features/wallet/walletSlice';
+import walletReducer from '../slices/walletSlice';
 
 export const store = configureStore({
   reducer: {

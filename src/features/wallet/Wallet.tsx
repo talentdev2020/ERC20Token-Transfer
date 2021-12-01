@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  setBalance,
-  getBalance
-} from './walletSlice';
+  setWalletInfo,
+  getWalletInfo
+} from '../../slices/walletSlice';
 
-export function Counter() {
-  const balance = useAppSelector(getBalance);
+export function Wallet() {
+  const walletInfo = useAppSelector(getWalletInfo);
   const dispatch = useAppDispatch();
  
   return (
     <div>
-       
+       Wallet
     </div>
   );
 }
