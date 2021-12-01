@@ -1,7 +1,7 @@
 import React from 'react';
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'; // v1.x
 import { makeStyles } from "@material-ui/core/styles";
-import { Wallet } from './features/wallet/Wallet';
+import Wallet from './pages/wallet';
 import Header from "./components/header"
 import Bottom from "./components/bottom"
 

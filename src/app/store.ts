@@ -7,6 +7,15 @@ export const store = configureStore({
     counter: counterReducer,
     wallet: walletReducer
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['wallet/setTokenInstance', 'wallet/setProvider'],
+        // Ignore these paths in the state
+        ignoredPaths: ['wallet.tokenInstance', 'wallet.provider'],
+      },
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -6,8 +6,11 @@ import { ethers, utils } from 'ethers';
 import { useAppDispatch } from '../app/hooks';
 import { fixedBalance } from "../utils/format"
 import {
-    setWalletInfo
+    setWalletInfo,
+    setTokenInstance,
+    setProvider
 } from '../slices/walletSlice';
+
 import ABI from "../consts/tokenABI.json"  ;
 declare global {
     interface Window { ethereum: any; }
@@ -35,9 +38,10 @@ const Header = () => {
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const address = accounts[0]
-            const contract = new ethers.Contract(process.env.REACT_APP_CONTRACTADDRESS || "0xad6d458402f60fd3bd25163575031acdce07538d", ABI, provider);
-            const daiBalance = await contract.balanceOf(address);
+            const address = accounts[0];
+            const contractAddress = process.env.REACT_APP_CONTRACTADDRESS || "0xad6d458402f60fd3bd25163575031acdce07538d" 
+            const tokenInstance = new ethers.Contract(contractAddress, ABI, provider);
+            const daiBalance = await tokenInstance.balanceOf(address);
             const ethBalance = await provider.getBalance(address);
 
             dispatch(setWalletInfo({
@@ -45,6 +49,8 @@ const Header = () => {
                 daiBalance: fixedBalance(utils.formatEther(daiBalance)),
                 address
             }))
+            dispatch(setTokenInstance(tokenInstance))
+            dispatch(setProvider(provider))
         } catch (err) {
             console.log(err)
         }
