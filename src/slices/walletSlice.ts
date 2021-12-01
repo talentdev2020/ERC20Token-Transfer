@@ -2,15 +2,23 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 
 interface IWalletInfo {
-    balance: Number;
+    daiBalance: String;
+    ethBalance: String;
     address: String;
-    provider: any;
 }
 
-const initialState: IWalletInfo = {
-  balance: 0,
-  address: "",
-  provider: null
+interface IWalletState {
+  wallet: IWalletInfo;
+  tokenInstance: null;
+}
+
+const initialState: IWalletState = {
+  wallet: {
+    daiBalance: "0",
+    ethBalance: "0",
+    address: ""
+  },
+  tokenInstance: null
 };
 
 export const walletSlice = createSlice({
@@ -20,26 +28,22 @@ export const walletSlice = createSlice({
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
     setWalletInfo: (state, action: PayloadAction<IWalletInfo>) => {
-      state.balance = action.payload.balance;
-      state.address = action.payload.address;
+      state.wallet = action.payload;
     },
-    setProvider: (state, action: PayloadAction<any>) => {
-        state.provider = action.payload;
+    setTokenInstance: (state, action: PayloadAction<any>) => {
+        state.tokenInstance = action.payload;
       },
   },
 });
 
 export const { setWalletInfo } = walletSlice.actions;
-export const { setProvider } = walletSlice.actions;
+export const { setTokenInstance } = walletSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const getWalletInfo = (state: RootState) => ({
-    balance: state.wallet.balance,
-    address: state.wallet.address
-});
+export const getWalletInfo = (state: RootState) => state.wallet.wallet;
 
-export const getProvider = (state: RootState) => state.wallet.provider;
+export const getTokenInstance = (state: RootState) => state.wallet.tokenInstance;
 
 export default walletSlice.reducer;
