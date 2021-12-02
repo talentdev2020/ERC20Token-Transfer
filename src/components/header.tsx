@@ -33,7 +33,7 @@ declare global {
 const Header = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [isConnect, setIsConnect] = useState( false );
+  const [isConnect, setIsConnect] = useState<boolean>(false);
   const { account, chainId, activate, deactivate, library } = useWeb3React();
 
   const fetchBalance = useCallback(async () => {

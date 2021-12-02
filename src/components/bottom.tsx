@@ -35,7 +35,7 @@ import { getEthBalance } from '../slices/walletSlice';
 
 const Bottom = () => {
   const classes = useStyles();
-  const ethBalance = useAppSelector(getEthBalance);
+  const ethBalance: string = useAppSelector(getEthBalance);
   const { account } = useWeb3React();
 
   const onCopyAddress = () => {

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 interface IWalletState {
-    daiBalance: String;
-    ethBalance: String;
+    daiBalance: string;
+    ethBalance: string;
 }
 
 const initialState: IWalletState = {
@@ -16,10 +16,10 @@ export const walletSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
-    setDaiBalance: (state, action: PayloadAction<String>) => {
+    setDaiBalance: (state, action: PayloadAction<string>) => {
       state.daiBalance = action.payload;
     },
-    setEthBalance: (state, action: PayloadAction<String>) => {
+    setEthBalance: (state, action: PayloadAction<string>) => {
       state.ethBalance = action.payload;
     },
   },

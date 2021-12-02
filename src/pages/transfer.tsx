@@ -37,12 +37,12 @@ const useStyles = makeStyles(theme => ({
 const Transfer = () => {
   const classes = useStyles();
   const { account, library } = useWeb3React();
-  const [amount, setAmount] = useState(0);
-  const [address, setAddress] = useState("");
-  const [isSending, setIsSending] = useState(false);
-  const [isAddressError, setAddressError] = useState(false);
-  const [isAmountError, setAmountError] = useState(false);
-  const [transactionHash, setTransactionHash] = useState("");
+  const [amount, setAmount] = useState<number>(0);
+  const [address, setAddress] = useState<string>("");
+  const [isSending, setIsSending] = useState<boolean>(false);
+  const [isAddressError, setAddressError] = useState<boolean>(false);
+  const [isAmountError, setAmountError] = useState<boolean>(false);
+  const [transactionHash, setTransactionHash] = useState<string>("");
   const daiBalance = useAppSelector(getDaiBalance);
 
   const onChangeAmount = (e: any) => {

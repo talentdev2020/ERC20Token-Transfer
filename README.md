@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the Typescript, [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Living Site
 
@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## How to Configure
 
-Now this app transfer Dai token.  If you want to transfer other ERC20 token, you can modify contract address and ABI json in "conts" folder
+Now this app transfers Dai token.  If you want to transfer other ERC20 token, you can modify contract address and ABI json in "consts" folder
 
 ## Functionality
 
