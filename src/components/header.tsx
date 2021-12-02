@@ -34,17 +34,15 @@ const Header = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const [isConnect, setIsConnect] = useState( false );
-  const { account, activate, library } = useWeb3React();
+  const { account, chainId, activate, deactivate, library } = useWeb3React();
 
   const fetchBalance = useCallback(async () => {
-    try {
-        console.log(":fetch", library)
-        
+    console.log({account})
+    try {      
         const tokenInstance = new Contract(DaiContractAddress, ABI, library);
-        console.log({tokenInstance})
         const daiBalance = await tokenInstance.balanceOf(account);
         const ethBalance = await library.getBalance(account);
-        console.log(formatEther(daiBalance));
+
         dispatch(setDaiBalance(fixedBalance(formatEther(daiBalance))));
         dispatch(setEthBalance(fixedBalance(formatEther(ethBalance))));
     } catch (err) {
@@ -54,15 +52,28 @@ const Header = () => {
   }, [library])
 
   useEffect(() => {
-      console.log({library})
       if (!library) return;
+     
 
       library.on('block', fetchBalance);
+      if (window.ethereum) {
+        console.log("ethereum")
+      window.ethereum.on('accountsChanged', async (accounts: Array<any>) => {
+        console.log(accounts[0])
+      });
+    }
       return () => {
         library.off('block', fetchBalance);
       };
   }, [fetchBalance, library]);
 
+  useEffect(() => {
+    if(chainId && chainId !== 3) {
+      alert("We only support the Ropsten Test Network");
+      deactivate();
+      return;
+    }
+  }, [chainId, deactivate])
   
   const onConnectWallet = async () => {
     setIsConnect(true);
