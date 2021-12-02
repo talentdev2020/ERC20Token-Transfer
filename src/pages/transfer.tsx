@@ -102,7 +102,7 @@ const Transfer = () => {
                 {
                   account && 
                   <div className={classes.balance}>
-                    Balance: {daiBalance}
+                    DAI Balance: {daiBalance}
                   </div>
                 }
                 
