@@ -68,15 +68,7 @@ const Header = () => {
     setIsConnect(true);
 
     await activate(injectedConnector);
-    // try {
-    //     const tokenInstance = new Contract(DaiContractAddress, ABI, library);
-    //     const daiBalance = await tokenInstance.balanceOf(account);
-    //     const ethBalance = await library.getBalance(account);
-    //     dispatch(setDaiBalance(fixedBalance(formatEther(daiBalance))));
-    //     dispatch(setEthBalance(fixedBalance(formatEther(ethBalance))));
-    // } catch (err) {
-    //     console.log(err)
-    // }
+
     setIsConnect(false);
    }
   return (
@@ -84,6 +76,7 @@ const Header = () => {
         <div>
             <span>DeFi App</span>
         </div>
+        
         <div>
             <Button variant="contained" color="secondary" onClick={ () => onConnectWallet()} >
                 CONNECT WALLET  

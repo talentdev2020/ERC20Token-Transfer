@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Wallet = () => {
+const Transfer = () => {
   const classes = useStyles();
   const { account, library } = useWeb3React();
   const [amount, setAmount] = useState(0);
@@ -54,19 +54,6 @@ const Wallet = () => {
     setAddress(e.target.value);
     setAddressError(false);
   }
-
-  // const makeTransaction = (from: string, ABI: Array<string>) => {
-  //   const contractAddress = process.env.REACT_APP_CONTRACTADDRESS || "0xad6d458402f60fd3bd25163575031acdce07538d";
-    
-  //   let iface = new utils.Interface(ABI)
-  //   const tx = [{
-  //       from: walletInfo.address,
-  //       to: contractAddress,
-  //       data: iface.encodeFunctionData("transfer", [ address, utils.parseEther(amount.toString()) ])
-  //     }];
-
-  //   return tx;
-  // }
 
   const onSend = async () => { 
     if (!amount) {
@@ -88,10 +75,12 @@ const Wallet = () => {
     try {
       let tx = await ERC20Contract.transfer(address, parseEther(amount.toString()));
       setTransactionHash(tx.hash);
+
       await tx.wait();
     } catch (err: any) {
       console.log(err)
     }
+    
     setIsSending(false);   
   }
 
@@ -144,4 +133,4 @@ const Wallet = () => {
   )
 }
 
-export default Wallet;
+export default Transfer;

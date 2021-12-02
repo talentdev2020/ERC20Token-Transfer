@@ -2,7 +2,7 @@ import React from 'react';
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from '@ethersproject/providers'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'; // v1.x
-import Wallet from './pages/wallet';
+import Transfer from './pages/transfer';
 import Header from "./components/header"
 import Bottom from "./components/bottom"
 
@@ -24,7 +24,7 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Header />
-        <Wallet />
+        <Transfer />
         <Bottom />
       </Web3ReactProvider>
     </MuiThemeProvider>
