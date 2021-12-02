@@ -71,10 +71,10 @@ const Transfer = () => {
     }
 
     setIsSending(true);
-    const ERC20Contract = new Contract(DaiContractAddress, ABI, library.getSigner());
+    const tokenInstance = new Contract(DaiContractAddress, ABI, library.getSigner());
     
     try {
-      let tx = await ERC20Contract.transfer(address, parseEther(amount.toString()));
+      let tx = await tokenInstance.transfer(address, parseEther(amount.toString()));
       setTransactionHash(tx.hash);
 
       await tx.wait();
