@@ -75,6 +75,7 @@ const Header = () => {
   }, [account, fetchBalance]);
 
   useEffect(() => {
+    // only support ropsten
     if(chainId && chainId !== 3) {
       alert("We only support the Ropsten Test Network");
       deactivate();
