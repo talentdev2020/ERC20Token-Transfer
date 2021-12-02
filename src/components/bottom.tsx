@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
-import { useAppSelector, useAppDispatch } from '../app/hooks';
+import { useWeb3React } from "@web3-react/core";
+import { useAppSelector } from '../app/hooks';
 import { getShortAddress } from "../utils/format";
-import {
-    getWalletInfo,
-} from '../slices/walletSlice';
+import { getEthBalance } from '../slices/walletSlice';
   
  const useStyles = makeStyles(theme => ({
   root: {
@@ -26,14 +25,12 @@ import {
   walletSection: {
     textAlign: 'right'
   },
-  walletSpan: {
-    marginRight: "7px",
-  }
 }));
 
 const Bottom = () => {
   const classes = useStyles();
-  const walletInfo = useAppSelector(getWalletInfo);
+  const ethBalance = useAppSelector(getEthBalance);
+  const { account } = useWeb3React();
 
   return (
       <div className={classes.root}>
@@ -41,14 +38,13 @@ const Bottom = () => {
             <span>DeFi App</span>
         </div>
         {
-          walletInfo.address &&
+          account &&
           <div className={classes.walletSection}>
             <div>
-              { getShortAddress(walletInfo.address) }
+              { getShortAddress(account) }
             </div>
             <div  className={classes.walletBalance}>
-              <span className={classes.walletSpan}>{walletInfo.ethBalance} ETH</span>
-              <span>{walletInfo.daiBalance} DAI</span>
+              {ethBalance} ETH
             </div>
         </div>
         }
