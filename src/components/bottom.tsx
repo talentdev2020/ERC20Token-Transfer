@@ -25,6 +25,12 @@ import { getEthBalance } from '../slices/walletSlice';
   walletSection: {
     textAlign: 'right'
   },
+  address: {
+    cursor: "pointer",
+    [`&:hover`]: {
+      fontSize: "14px"
+  },
+  }
 }));
 
 const Bottom = () => {
@@ -32,6 +38,9 @@ const Bottom = () => {
   const ethBalance = useAppSelector(getEthBalance);
   const { account } = useWeb3React();
 
+  const onCopyAddress = () => {
+    navigator.clipboard.writeText( account || "")
+  }
   return (
       <div className={classes.root}>
         <div>
@@ -40,7 +49,7 @@ const Bottom = () => {
         {
           account &&
           <div className={classes.walletSection}>
-            <div>
+            <div className={classes.address} onClick={() => onCopyAddress()} title={account}>
               { getShortAddress(account) }
             </div>
             <div  className={classes.walletBalance}>
