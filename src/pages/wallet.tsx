@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme => ({
     width: "200px"
   },
   balance: {
-    color: "#6655f1"
+    color: "#6655f1",
+    paddingLeft: "20px"
   }
 }));
 
@@ -109,9 +110,13 @@ const Wallet = () => {
                     type="number"
                     onChange={e => onChangeAmount(e)}
                 />
-                <div className={classes.balance}>
-                  Balance: {daiBalance}
-                </div>
+                {
+                  account && 
+                  <div className={classes.balance}>
+                    Balance: {daiBalance}
+                  </div>
+                }
+                
             </div>
 
             <div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { useWeb3React } from "@web3-react/core";
 import { formatEther } from "@ethersproject/units";
@@ -36,19 +36,47 @@ const Header = () => {
   const [isConnect, setIsConnect] = useState( false );
   const { account, activate, library } = useWeb3React();
 
-  const onConnectWallet = async () => {
-    await activate(injectedConnector);
-    
-    setIsConnect(true);
+  const fetchBalance = useCallback(async () => {
     try {
+        console.log(":fetch", library)
+        
         const tokenInstance = new Contract(DaiContractAddress, ABI, library);
+        console.log({tokenInstance})
         const daiBalance = await tokenInstance.balanceOf(account);
         const ethBalance = await library.getBalance(account);
+        console.log(formatEther(daiBalance));
         dispatch(setDaiBalance(fixedBalance(formatEther(daiBalance))));
         dispatch(setEthBalance(fixedBalance(formatEther(ethBalance))));
     } catch (err) {
         console.log(err)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [library])
+
+  useEffect(() => {
+      console.log({library})
+      if (!library) return;
+
+      library.on('block', fetchBalance);
+      return () => {
+        library.off('block', fetchBalance);
+      };
+  }, [fetchBalance, library]);
+
+  
+  const onConnectWallet = async () => {
+    setIsConnect(true);
+
+    await activate(injectedConnector);
+    // try {
+    //     const tokenInstance = new Contract(DaiContractAddress, ABI, library);
+    //     const daiBalance = await tokenInstance.balanceOf(account);
+    //     const ethBalance = await library.getBalance(account);
+    //     dispatch(setDaiBalance(fixedBalance(formatEther(daiBalance))));
+    //     dispatch(setEthBalance(fixedBalance(formatEther(ethBalance))));
+    // } catch (err) {
+    //     console.log(err)
+    // }
     setIsConnect(false);
    }
   return (

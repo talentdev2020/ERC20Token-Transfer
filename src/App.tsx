@@ -2,7 +2,6 @@ import React from 'react';
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from '@ethersproject/providers'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'; // v1.x
-import { makeStyles } from "@material-ui/core/styles";
 import Wallet from './pages/wallet';
 import Header from "./components/header"
 import Bottom from "./components/bottom"
