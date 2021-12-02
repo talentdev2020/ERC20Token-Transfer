@@ -37,7 +37,6 @@ const Header = () => {
   const { account, chainId, activate, deactivate, library } = useWeb3React();
 
   const fetchBalance = useCallback(async () => {
-    console.log({account})
     try {      
         const tokenInstance = new Contract(DaiContractAddress, ABI, library);
         const daiBalance = await tokenInstance.balanceOf(account);
@@ -49,23 +48,30 @@ const Header = () => {
         console.log(err)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [library])
+  }, [library, account])
 
   useEffect(() => {
-      if (!library) return;
-     
-
+      if (!library || !account) return;
+    
       library.on('block', fetchBalance);
-      if (window.ethereum) {
-        console.log("ethereum")
-      window.ethereum.on('accountsChanged', async (accounts: Array<any>) => {
-        console.log(accounts[0])
-      });
-    }
+  
       return () => {
         library.off('block', fetchBalance);
       };
-  }, [fetchBalance, library]);
+  }, [account, fetchBalance, library]);
+ 
+  useEffect(() => {  
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged',async (accounts: string[]) => {
+          await activate(injectedConnector);
+        })
+      }
+  }, [activate, fetchBalance]);
+ 
+  useEffect(() => {
+    if (account)
+      fetchBalance();
+  }, [account, fetchBalance]);
 
   useEffect(() => {
     if(chainId && chainId !== 3) {
@@ -74,7 +80,7 @@ const Header = () => {
       return;
     }
   }, [chainId, deactivate])
-  
+
   const onConnectWallet = async () => {
     setIsConnect(true);
 
