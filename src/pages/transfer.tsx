@@ -21,9 +21,13 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     height: "calc(100vh - 100px)"
   },
-  input: {
+  inputAddress: {
     margin: "15px 0",
     width: "400px"
+  },
+  inputAmount: {
+    width: "400px",
+    marginBottom: "5px"
   },
   button: {
     width: "200px"
@@ -92,7 +96,7 @@ const Transfer = () => {
             <div>
                 <TextField
                     id="input-amount"
-                    className={classes.input}
+                    className={classes.inputAmount}
                     error={isAmountError}
                     variant="outlined"
                     label="Enter the amount"
@@ -111,7 +115,7 @@ const Transfer = () => {
             <div>
                 <TextField
                     id="input-address"
-                    className={classes.input}
+                    className={classes.inputAddress}
                     variant="outlined"
                     error={isAddressError}
                     label="Enter the recipient address"

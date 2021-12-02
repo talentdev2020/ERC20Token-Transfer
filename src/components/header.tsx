@@ -34,7 +34,7 @@ const Header = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const [isConnect, setIsConnect] = useState<boolean>(false);
-  const { account, chainId, activate, deactivate, library } = useWeb3React();
+  const { active, account, chainId, activate, deactivate, library } = useWeb3React();
 
   const fetchBalance = useCallback(async () => {
     try {      
@@ -82,11 +82,15 @@ const Header = () => {
   }, [chainId, deactivate])
 
   const onConnectWallet = async () => {
-    setIsConnect(true);
+    if (active) {
+      await deactivate()
+    } else {
+      setIsConnect(true);
 
-    await activate(injectedConnector);
-
-    setIsConnect(false);
+      await activate(injectedConnector);
+  
+      setIsConnect(false);
+    }
    }
   return (
       <div className={classes.root}>
@@ -96,10 +100,17 @@ const Header = () => {
         
         <div>
             <Button variant="contained" color="secondary" onClick={ () => onConnectWallet()} >
-                CONNECT WALLET  
-                {
-                    isConnect && <CircularProgress size="1.5rem"/>
-                }
+              {
+                !active ? <span>
+                  CONNECT WALLET  
+                    {
+                        isConnect && <CircularProgress size="1.5rem"/>
+                    }</span>
+                    : <span>
+                      DISCONNECT 
+                     </span>
+              }
+                
             </Button>
         </div>
       </div>

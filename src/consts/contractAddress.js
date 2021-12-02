@@ -1,1 +1,1 @@
-export const DaiContractAddress = "0xad6d458402f60fd3bd25163575031acdce07538d"
+export const DaiContractAddress = "0x64417E74064C0d12E0A31ed2A71Cb0a61a75A822"
