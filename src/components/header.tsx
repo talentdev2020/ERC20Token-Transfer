@@ -47,12 +47,12 @@ const Header = () => {
     } catch (err) {
         console.log(err)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [library, account])
+  }, [dispatch, library, account])
 
   useEffect(() => {
       if (!library || !account) return;
-    
+
+      // get the balance in realtime
       library.on('block', fetchBalance);
   
       return () => {
@@ -62,6 +62,7 @@ const Header = () => {
  
   useEffect(() => {  
       if (window.ethereum) {
+        // detect account changed
         window.ethereum.on('accountsChanged',async (accounts: string[]) => {
           await activate(injectedConnector);
         })

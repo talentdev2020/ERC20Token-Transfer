@@ -71,11 +71,8 @@ const Transfer = () => {
     }
 
     setIsSending(true);
-    const ERC20Contract = new Contract(
-      DaiContractAddress,
-      ABI,
-      library.getSigner()
-    );
+    const ERC20Contract = new Contract(DaiContractAddress, ABI, library.getSigner());
+    
     try {
       let tx = await ERC20Contract.transfer(address, parseEther(amount.toString()));
       setTransactionHash(tx.hash);
@@ -91,49 +88,49 @@ const Transfer = () => {
   const onRedirectTransaction = () => {
     window.open(`https://ropsten.etherscan.io/tx/${transactionHash}`)
   }
+
   return (
-      <div className={classes.root}>
-            <div>
-                <TextField
-                    id="input-amount"
-                    className={classes.inputAmount}
-                    error={isAmountError}
-                    variant="outlined"
-                    label="Enter the amount"
-                    type="number"
-                    onChange={e => onChangeAmount(e)}
-                />
-                {
-                  account && 
-                  <div className={classes.balance}>
-                    DAI Balance: {daiBalance}
-                  </div>
-                }
-                
-            </div>
-
-            <div>
-                <TextField
-                    id="input-address"
-                    className={classes.inputAddress}
-                    variant="outlined"
-                    error={isAddressError}
-                    label="Enter the recipient address"
-                    onChange={e => onChangeAddress(e)}
-                />
-            </div>
-
-            <Button disabled={!account} variant="contained" color="primary" className={classes.button} onClick={ () => onSend()} >
-                SEND
-                {
-                    isSending && <CircularProgress size="1.5rem" color="secondary"/>
-                }
-            </Button>
-            <br/>
-            <Button disabled={!transactionHash} variant="contained" color="primary" className={classes.button} onClick={ () => onRedirectTransaction()} >
-              Viw Transaction
-            </Button>
+    <div className={classes.root}>
+      <div>
+        <TextField
+          id="input-amount"
+          className={classes.inputAmount}
+          error={isAmountError}
+          variant="outlined"
+          label="Enter the amount"
+          type="number"
+          onChange={e => onChangeAmount(e)}
+        />
+        {
+          account && 
+          <div className={classes.balance}>
+            DAI Balance: {daiBalance}
+          </div>
+        }
       </div>
+
+      <div>
+        <TextField
+          id="input-address"
+          className={classes.inputAddress}
+          variant="outlined"
+          error={isAddressError}
+          label="Enter the recipient address"
+          onChange={e => onChangeAddress(e)}
+        />
+      </div>
+
+      <Button disabled={!account} variant="contained" color="primary" className={classes.button} onClick={ () => onSend()} >
+        SEND
+        {
+          isSending && <CircularProgress size="1.5rem" color="secondary"/>
+        }
+      </Button>
+      <br/>
+      <Button disabled={!transactionHash} variant="contained" color="primary" className={classes.button} onClick={ () => onRedirectTransaction()} >
+        Viw Transaction
+      </Button>
+    </div>
   )
 }
 
